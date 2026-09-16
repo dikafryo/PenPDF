@@ -22,7 +22,7 @@ except ImportError:
 class PdfApi:
     def __init__(self):
         self._window = None
-        self.app_version = "ver2026.08.20"
+        self.app_version = "ver2026.09.15"
         self.force_close = False  
         
         # [핵심] 암호(unlocked_passwords) 저장소를 완전히 삭제했습니다!
@@ -105,6 +105,14 @@ class PdfApi:
     def get_app_info(self): return {"success": True, "version": self.app_version}
     def set_window(self, window): self._window = window
     def confirm_exit(self): self.force_close = True; self._window.destroy()
+
+    # ▼▼▼ 여기에 아래 4줄을 추가하세요 ▼▼▼
+    def open_github(self):
+        import webbrowser
+        webbrowser.open("https://github.com/seomyeongho/PenPDF")
+        return {"success": True}
+    # ▲▲▲ 추가 끝 ▲▲▲
+
     def get_system_fonts(self):
         fonts_list = []
         for eng_name in self.sys_fonts.keys():
@@ -1087,6 +1095,111 @@ class PdfApi:
                 self.update_progress(100, "내보내기 완료!")
                 return {"success": True, "saved_path": f"{output_folder}\n(총 {saved_count}개 파일 저장)"}
         except Exception as e: return {"success": False, "error": f"저장 오류:\n{str(e)}"}
+
+    # [신규] 편집된 문서를 조립하여 윈도우 인쇄 스풀러로 전송하는 전용 엔진
+    def print_pages(self, pages_sequence):
+        if not pages_sequence: return {"success": False, "error": "인쇄할 페이지가 없습니다."}
+        try:
+            if self._window:
+                self._window.evaluate_js("let s=document.getElementById('ultimate-shield');if(!s){s=document.createElement('div');s.id='ultimate-shield';s.style.cssText='position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:2147483647;background:transparent;cursor:wait;';document.body.appendChild(s);} showLoading('인쇄용 문서를 준비하고 있습니다...'); startProgressPolling();")
+            
+            self.update_progress(10, "1단계: 인쇄용 문서 병합 및 조립 준비 중...")
+
+            self.update_progress(20, "2단계: 원본 파일 스캔 및 암호 해제 중...")
+            sources_used = set(os.path.normcase(os.path.abspath(p['source'].replace('file:///', '').replace('file://', ''))) for p in pages_sequence)
+            out_pdf = fitz.open()
+            open_docs = {}
+
+            if len(sources_used) == 1:
+                single_src = list(sources_used)[0]
+                if single_src in self.doc_cache:
+                    out_pdf = fitz.open("pdf", self.doc_cache[single_src].tobytes())
+                else:
+                    out_pdf = fitz.open(single_src)
+                    if out_pdf.is_encrypted:
+                        if out_pdf.authenticate(""):
+                            temp_bytes = out_pdf.tobytes(encryption=fitz.PDF_ENCRYPT_NONE)
+                            out_pdf.close(); out_pdf = fitz.open("pdf", temp_bytes)
+                        else:
+                            out_pdf.close()
+                            if self._window: self._window.evaluate_js("stopProgressPolling(); hideLoading();")
+                            return {"success": False, "error": "암호 해제 실패"}
+                
+                self.update_progress(50, "3단계: 페이지 순서 배치 및 도장/텍스트 얹는 중...")
+                out_pdf.select([p['page_index'] for p in pages_sequence])
+                for i, info in enumerate(pages_sequence):
+                    page = out_pdf[i]
+                    if info.get('rotation', 0): page.set_rotation((page.rotation + info.get('rotation', 0)) % 360)
+                    if info.get('shapes'): self._draw_shapes_on_page(page, info.get('shapes'))
+                    
+                    if info.get('rasterOverlay'):
+                        img_data = base64.b64decode(info.get('rasterOverlay').split('base64,')[1])
+                        page.insert_image(page.rect, stream=img_data)
+            else:
+                chunks = []; current_chunk = None
+                for page_info in pages_sequence:
+                    src = os.path.normcase(os.path.abspath(page_info['source'].replace('file:///', '').replace('file://', '')))
+                    idx = page_info['page_index']
+                    
+                    if src not in open_docs:
+                        if src in self.doc_cache:
+                            open_docs[src] = fitz.open("pdf", self.doc_cache[src].tobytes())
+                        else:
+                            doc = fitz.open(src)
+                            if doc.is_encrypted:
+                                if doc.authenticate(""):
+                                    temp_bytes = doc.tobytes(encryption=fitz.PDF_ENCRYPT_NONE)
+                                    doc.close(); doc = fitz.open("pdf", temp_bytes)
+                                else:
+                                    doc.close(); 
+                                    if self._window: self._window.evaluate_js("stopProgressPolling(); hideLoading();")
+                                    return {"success": False, "error": "암호 해제 실패"}
+                            open_docs[src] = doc
+
+                    if current_chunk is None: current_chunk = {'src': src, 'start': idx, 'end': idx, 'infos': [page_info]}
+                    else:
+                        if current_chunk['src'] == src and idx == current_chunk['end'] + 1:
+                            current_chunk['end'] = idx; current_chunk['infos'].append(page_info)
+                        else:
+                            chunks.append(current_chunk); current_chunk = {'src': src, 'start': idx, 'end': idx, 'infos': [page_info]}
+                if current_chunk: chunks.append(current_chunk)
+
+                current_out_idx = 0
+                total_chunks = len(chunks)
+                for chunk_idx, chunk in enumerate(chunks):
+                    self.update_progress(40 + int((chunk_idx / total_chunks) * 40), f"3단계: 다중 파일 병합 조립 중 ({chunk_idx + 1} / {total_chunks})")
+                    out_pdf.insert_pdf(open_docs[chunk['src']], from_page=chunk['start'], to_page=chunk['end'])
+                    for i, info in enumerate(chunk['infos']):
+                        page = out_pdf[current_out_idx + i]
+                        if info.get('rotation', 0): page.set_rotation((page.rotation + info.get('rotation', 0)) % 360)
+                        if info.get('shapes'): self._draw_shapes_on_page(page, info.get('shapes'))
+                        
+                        if info.get('rasterOverlay'):
+                            img_data = base64.b64decode(info.get('rasterOverlay').split('base64,')[1])
+                            page.insert_image(page.rect, stream=img_data)
+                            
+                    current_out_idx += len(chunk['infos'])
+                for doc in open_docs.values(): doc.close()
+
+            self.update_progress(90, "4단계: 임시 파일 생성 및 인쇄 스풀러 전송 중...")
+            
+            # 임시 폴더에 보안 처리된 인쇄용 PDF를 찍어냅니다.
+            temp_path = os.path.join(tempfile.gettempdir(), f"print_{uuid.uuid4().hex}.pdf")
+            out_pdf.save(temp_path, garbage=3, deflate=True, clean=True) 
+            out_pdf.close()
+            
+            # 윈도우 OS의 기본 인쇄 다이얼로그 호출
+            import platform
+            if platform.system() == "Windows":
+                os.startfile(temp_path, "print")
+            
+            self.update_progress(100, "프린터로 명령을 전송했습니다!")
+            if self._window:
+                self._window.evaluate_js("stopProgressPolling(); hideLoading(); let s=document.getElementById('ultimate-shield');if(s)s.remove();")
+                
+            return {"success": True}
+        except Exception as e: 
+            return {"success": False, "error": f"인쇄 오류:\n{str(e)}"}
 
     # =================================================================
     # 7. 보안 설정 제어 (저장/해제)

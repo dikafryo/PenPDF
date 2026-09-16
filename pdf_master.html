@@ -107,6 +107,14 @@
                 <span>보안 설정</span>
             </button>
         </div>
+        <!-- ▼▼▼ 메뉴바 하단 오픈소스 버튼 추가 ▼▼▼ -->
+        <div class="p-4 border-t border-gray-100 bg-gray-50/50">
+            <button onclick="if(typeof pywebview !== 'undefined' && pywebview.api) pywebview.api.open_github()" class="w-full flex items-center justify-center space-x-2 px-4 py-2.5 bg-white hover:bg-gray-100 text-gray-600 rounded-lg text-xs font-bold transition-all border border-gray-200 shadow-sm group">
+                <svg class="w-5 h-5 text-gray-500 group-hover:text-gray-800 transition-colors" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
+                <span>오픈소스 & 라이선스 안내</span>
+            </button>
+        </div>
+        <!-- ▲▲▲ 추가 끝 ▲▲▲ -->
     </div>
 
     <div class="flex-1 flex flex-col relative overflow-hidden">
@@ -185,58 +193,73 @@
         <div id="content-editor" class="hidden flex-1 flex flex-col h-full bg-gray-50">
             <div class="bg-white border-b border-gray-200 p-4 flex justify-between items-center shadow-sm z-10 shrink-0">
 
-                <div class="flex space-x-4 items-center">
-                    <button onclick="addPdfForEdit()" class="bg-indigo-600 text-white hover:bg-indigo-700 px-4 py-2 rounded-lg font-bold transition-colors flex items-center space-x-2 shadow-sm">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                        <span>PDF 불러오기</span>
-                    </button>
+                <!-- [개선] 패딩과 여백(space-x)을 대폭 줄이고, 찌그러짐 방지(shrink-0) 및 스크롤(overflow-x-auto) 적용 -->
+                <div class="bg-white border-b border-gray-200 px-3 py-2 flex justify-between items-center shadow-sm z-10 shrink-0 overflow-x-auto custom-scrollbar">
 
-                    <div class="flex bg-gray-100 rounded-lg p-1 border border-gray-200">
-                        <button onclick="loadProject()" class="text-gray-700 hover:bg-white hover:shadow-sm px-3 py-1.5 rounded-md text-sm font-medium transition-all flex items-center space-x-1" title="작업 중인 프로젝트(*.ppdf) 열기">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"></path></svg>
-                            <span>프로젝트 열기</span>
+                    <div class="flex space-x-2 items-center shrink-0">
+                        <button onclick="addPdfForEdit()" class="bg-indigo-600 text-white hover:bg-indigo-700 px-3 py-1.5 rounded-lg text-sm font-bold transition-colors flex items-center space-x-1 shadow-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                            <span>PDF 불러오기</span>
                         </button>
-                        <button onclick="saveProject()" class="text-gray-700 hover:bg-white hover:shadow-sm px-3 py-1.5 rounded-md text-sm font-medium transition-all flex items-center space-x-1" title="현재 상태를 프로젝트 파일(*.ppdf)로 저장 (덮어쓰기)">
+
+                        <div class="flex bg-gray-100 rounded-lg p-1 border border-gray-200 shrink-0">
+                            <button onclick="loadProject()" class="text-gray-700 hover:bg-white hover:shadow-sm px-2 py-1 rounded-md text-sm font-medium transition-all flex items-center space-x-1" title="작업 중인 프로젝트(*.ppdf) 열기">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"></path></svg>
+                                <span>프로젝트 열기</span>
+                            </button>
+                            <button onclick="saveProject()" class="text-gray-700 hover:bg-white hover:shadow-sm px-2 py-1 rounded-md text-sm font-medium transition-all flex items-center space-x-1" title="현재 상태를 프로젝트 파일(*.ppdf)로 저장 (덮어쓰기)">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
+                                <span>저장</span>
+                            </button>
+                            <button onclick="saveProjectAs()" class="text-gray-700 hover:bg-white hover:shadow-sm px-2 py-1 rounded-md text-sm font-medium transition-all flex items-center space-x-1" title="새로운 프로젝트 파일(*.ppdf)로 다른 이름으로 저장">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
+                                <span>다른 이름으로 저장</span>
+                            </button>
+                        </div>
+
+                        <div class="flex items-center space-x-0.5 border-l border-gray-300 pl-2 shrink-0">
+                            <button id="btnUndoMain" onclick="undoEditor()" disabled class="p-1.5 text-gray-400 rounded-lg transition-colors cursor-not-allowed hover:bg-gray-100" title="되돌리기"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path></svg></button>
+                            <button id="btnRedoMain" onclick="redoEditor()" disabled class="p-1.5 text-gray-400 rounded-lg transition-colors cursor-not-allowed hover:bg-gray-100" title="다시 실행"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 10h-10a8 8 0 00-8 8v2M21 10l-6 6m6-6l-6-6"></path></svg></button>
+
+                            <div class="w-px h-5 bg-gray-300 mx-1.5"></div>
+
+                            <button onclick="splitSelectedPages()" class="px-2.5 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg text-sm font-bold transition-colors flex items-center space-x-1 shadow-sm" title="선택된 페이지를 2~4장으로 분할합니다">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m-4-4l-4-4 4-4m8 8l4-4-4-4"></path></svg>
+                                <span>나누기</span>
+                            </button>
+
+                            <button onclick="deleteSelectedPages()" class="px-2.5 py-1.5 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg text-sm font-bold transition-colors flex items-center space-x-1 shadow-sm" title="파란색 테두리로 선택된 페이지만 일괄 삭제">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                <span>선택 삭제</span>
+                            </button>
+                            <button onclick="clearEditor()" class="ml-1 px-2.5 py-1.5 text-gray-500 hover:bg-gray-100 rounded-lg text-sm font-bold transition-colors flex items-center space-x-1" title="모든 페이지 비우기">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h16v2H4V4zm2 4h12v11a2 2 0 01-2 2H8a2 2 0 01-2-2V8z"></path></svg>
+                                <span>비우기</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!--<div class="flex items-center space-x-2 bg-indigo-50 p-1 rounded-xl border border-indigo-100 shrink-0 ml-2">
+                        <button onclick="openPrintModal()" class="bg-white border border-gray-300 text-gray-800 hover:bg-gray-100 px-3 py-1.5 rounded-lg text-sm font-bold shadow-sm transition-colors flex items-center space-x-1" title="편집된 문서를 프린터로 인쇄합니다">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                            <span>인쇄</span>
+                        </button>
+                        <button onclick="openExportModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg text-sm font-bold shadow-sm transition-colors flex items-center space-x-1" title="문서를 PDF나 이미지로 변환하여 저장합니다">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
-                            <span>저장</span>
+                            <span>PDF 변환</span>
                         </button>
-                        <button onclick="saveProjectAs()" class="text-gray-700 hover:bg-white hover:shadow-sm px-3 py-1.5 rounded-md text-sm font-medium transition-all flex items-center space-x-1" title="새로운 프로젝트 파일(*.ppdf)로 다른 이름으로 저장">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
-                            <span>다른 이름으로 저장</span>
-                        </button>
-                    </div>
-
-                    <div class="flex items-center space-x-1 border-l border-gray-300 pl-4">
-                        <button id="btnUndoMain" onclick="undoEditor()" disabled class="p-2 text-gray-400 rounded-lg transition-colors cursor-not-allowed hover:bg-gray-100" title="되돌리기"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path></svg></button>
-                        <button id="btnRedoMain" onclick="redoEditor()" disabled class="p-2 text-gray-400 rounded-lg transition-colors cursor-not-allowed hover:bg-gray-100" title="다시 실행"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 10h-10a8 8 0 00-8 8v2M21 10l-6 6m6-6l-6-6"></path></svg></button>
-
-                        <div class="w-px h-6 bg-gray-300 mx-2"></div>
-
-                        <button onclick="splitSelectedPages()" class="px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg text-sm font-bold transition-colors flex items-center space-x-1 shadow-sm" title="선택된 페이지를 2~4장으로 분할합니다">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m-4-4l-4-4 4-4m8 8l4-4-4-4"></path></svg>
-                            <span>나누기</span>
-                        </button>
-
-                        <button onclick="deleteSelectedPages()" class="px-3 py-1.5 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg text-sm font-bold transition-colors flex items-center space-x-1 shadow-sm" title="파란색 테두리로 선택된 페이지만 일괄 삭제">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                            <span>선택 삭제</span>
-                        </button>
-                        <button onclick="clearEditor()" class="ml-1 px-3 py-1.5 text-gray-500 hover:bg-gray-100 rounded-lg text-sm font-bold transition-colors flex items-center space-x-1" title="모든 페이지 비우기">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h16v2H4V4zm2 4h12v11a2 2 0 01-2 2H8a2 2 0 01-2-2V8z"></path></svg>
-                            <span>전체 비우기</span>
-                        </button>
-                    </div>
+                    </div>-->
                 </div>
 
-                <div class="flex items-center space-x-3 bg-indigo-50 p-1.5 rounded-xl border border-indigo-100">
-                    <span class="text-sm font-bold text-indigo-800 ml-3 mr-1">결과물 생성</span>
-                    <button onclick="openExportModal('selected')" class="bg-white border border-indigo-200 text-indigo-700 hover:bg-indigo-100 px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition-colors flex items-center space-x-1">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        <span>선택항목 내보내기</span>
+                <div class="flex items-center space-x-2 bg-indigo-50 p-1.5 rounded-xl border border-indigo-100">
+                    <!-- [수정] "결과물 생성" 텍스트 제거 및 버튼 단일화 -->
+                    <button onclick="openPrintModal()" class="bg-white border border-gray-300 text-gray-800 hover:bg-gray-100 px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition-colors flex items-center space-x-1" title="편집된 문서를 프린터로 인쇄합니다">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                        <span>인쇄</span>
                     </button>
-                    <button onclick="openExportModal('all')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition-colors flex items-center space-x-1">
+                    <button onclick="openExportModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition-colors flex items-center space-x-1" title="문서를 PDF나 이미지로 변환하여 저장합니다">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
-                        <span>전체 PDF 변환</span>
+                        <span>PDF 변환</span>
                     </button>
                 </div>
             </div>
@@ -624,19 +647,76 @@
         </div>
         <div id="exportModal" class="hidden fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
             <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4 transform transition-all scale-100">
-                <h3 class="text-xl font-bold text-gray-900 mb-1">결과물 내보내기 옵션</h3>
-                <p id="exportTargetText" class="text-sm text-indigo-600 font-semibold mb-6">대상이 표시됩니다.</p>
+                <h3 class="text-xl font-bold text-gray-900 mb-1 flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
+                    PDF 변환 옵션
+                </h3>
+                <p class="text-sm text-gray-500 mb-5">변환할 페이지 범위와 저장 방식을 선택해 주세요.</p>
+
+                <div class="mb-5 space-y-3 border-b border-gray-100 pb-5">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">1. 저장할 페이지 범위</label>
+                    <label class="flex items-center space-x-3 cursor-pointer p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                        <input type="radio" name="exportRange" value="all" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500" checked onchange="document.getElementById('exportRangeInput').disabled = true;">
+                        <span class="text-sm font-bold text-gray-700">전체 페이지 저장</span>
+                    </label>
+                    <label class="flex items-center space-x-3 cursor-pointer p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                        <input type="radio" name="exportRange" value="selected" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500" onchange="document.getElementById('exportRangeInput').disabled = true;">
+                        <span class="text-sm font-bold text-gray-700">선택한 쪽 저장 (파란 테두리)</span>
+                    </label>
+                    <label class="flex items-center space-x-3 cursor-pointer p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                        <input type="radio" name="exportRange" value="custom" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500" onchange="document.getElementById('exportRangeInput').disabled = false; document.getElementById('exportRangeInput').focus();">
+                        <span class="text-sm font-bold text-gray-700">저장 범위 지정</span>
+                    </label>
+                    <div class="pl-9 mt-1">
+                        <input type="text" id="exportRangeInput" disabled placeholder="예: 1-3, 5, 8" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2.5 border bg-white text-sm text-gray-800 disabled:bg-gray-100 disabled:text-gray-400 outline-none transition-all">
+                    </div>
+                </div>
+
                 <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">저장 형식 및 방법</label>
-                    <select id="exportFormat" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3 border bg-gray-50 text-gray-800">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">2. 저장 형식 및 방법</label>
+                    <select id="exportFormat" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3 border bg-gray-50 text-gray-800 text-sm font-medium">
                         <option value="merge_pdf">하나의 PDF 파일로 묶어서 생성</option>
                         <option value="split_pdf">각 페이지를 개별 PDF로 쪼개어 추출</option>
                         <option value="split_image">각 페이지를 이미지(PNG)로 추출</option>
                     </select>
                 </div>
+
                 <div class="flex justify-end space-x-3 mt-4">
-                    <button onclick="closeExportModal()" class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg transition-colors font-medium">취소</button>
-                    <button onclick="executeExport()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors font-medium shadow-sm">생성하기</button>
+                    <button onclick="closeExportModal()" class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg transition-colors font-medium text-sm">취소</button>
+                    <button onclick="executeExport()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors font-bold text-sm shadow-sm">생성하기</button>
+                </div>
+            </div>
+        </div>
+        <!-- [신규] 인쇄 전용 팝업 모달 -->
+        <div id="printModal" class="hidden fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+            <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full mx-4 transform transition-all scale-100">
+                <h3 class="text-xl font-bold text-gray-900 mb-1 flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                    인쇄 옵션
+                </h3>
+                <p class="text-sm text-gray-500 mb-6">인쇄할 페이지 범위를 선택해 주세요.</p>
+
+                <div class="mb-6 space-y-4">
+                    <label class="flex items-center space-x-3 cursor-pointer p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                        <input type="radio" name="printRange" value="all" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500" checked onchange="document.getElementById('printRangeInput').disabled = true;">
+                        <span class="text-sm font-bold text-gray-700">전체 인쇄</span>
+                    </label>
+                    <label class="flex items-center space-x-3 cursor-pointer p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                        <input type="radio" name="printRange" value="selected" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500" onchange="document.getElementById('printRangeInput').disabled = true;">
+                        <span class="text-sm font-bold text-gray-700">선택한 쪽 인쇄 (파란 테두리)</span>
+                    </label>
+                    <label class="flex items-center space-x-3 cursor-pointer p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                        <input type="radio" name="printRange" value="custom" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500" onchange="document.getElementById('printRangeInput').disabled = false; document.getElementById('printRangeInput').focus();">
+                        <span class="text-sm font-bold text-gray-700">인쇄 범위 지정</span>
+                    </label>
+                    <div class="pl-9 mt-1">
+                        <input type="text" id="printRangeInput" disabled placeholder="예: 1-3, 5, 8" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2.5 border bg-white text-sm text-gray-800 disabled:bg-gray-100 disabled:text-gray-400 outline-none transition-all">
+                    </div>
+                </div>
+
+                <div class="flex justify-end space-x-3 mt-4">
+                    <button onclick="closePrintModal()" class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg transition-colors font-medium text-sm">취소</button>
+                    <button onclick="executePrint()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors font-bold text-sm shadow-sm">인쇄 시작</button>
                 </div>
             </div>
         </div>
@@ -837,6 +917,13 @@
                     </select>
                 </div>
 
+                <!-- [신규] 개체 회전 각도 -->
+                <div class="flex items-center space-x-1 mr-3">
+                    <span class="font-bold text-gray-700 mr-1" title="선택한 개체의 회전 각도를 조절합니다">회전:</span>
+                    <input type="number" id="rotationPicker" value="0" step="1" oninput="applyProperty('angle', parseFloat(this.value) || 0, false)" class="w-16 border border-gray-300 rounded p-1 text-xs focus:ring-indigo-500 focus:border-indigo-500 bg-white text-center shadow-sm">
+                    <span class="text-[10px] font-bold text-gray-500">도(°)</span>
+                </div>
+
                 <!-- 텍스트 그룹 -->
                 <div class="flex items-center space-x-1 bg-white px-2 py-1.5 rounded-lg border border-gray-200 border-l ml-auto pl-3 shadow-sm">
                     <span class="font-bold text-gray-700 mr-1">글자:</span>
@@ -845,7 +932,7 @@
                     <input type="range" id="textTransparencyPicker" min="0" max="100" value="0" oninput="applyProperty('fill', document.getElementById('textColorPicker').value, true)" onchange="applyProperty('fill', document.getElementById('textColorPicker').value, true)" class="w-12 accent-indigo-500 cursor-pointer" title="0: 불투명, 100: 완전 투명">
 
                     <span class="font-bold text-gray-700 ml-3">글꼴:</span>
-                    <select id="fontFamilyPicker" oninput="applyProperty('fontFamily', this.value, true)" class="border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 py-1 px-1 bg-white w-32 truncate text-xs">
+                    <select id="fontFamilyPicker" oninput="applyProperty('fontFamily', this.value, true)" onchange="applyProperty('fontFamily', this.value, true)" class="border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 py-1 px-1 bg-white w-32 truncate text-xs">
                         <option value="Pretendard, sans-serif">시스템 폰트 로딩 중...</option>
                     </select>
 
@@ -1727,18 +1814,52 @@
 
 
 
-        function openExportModal(target) { const grid = document.getElementById('pageGrid'); if (grid.children.length === 0) return showToast('내보낼 페이지가 없습니다.', true); currentExportTarget = target; const count = target === 'selected' ? grid.querySelectorAll('.selected-page').length : grid.children.length; if (target === 'selected' && count === 0) return showToast('선택된 페이지가 없습니다.', true); document.getElementById('exportTargetText').innerText = `👉 ${target === 'selected' ? '선택된' : '전체'} 페이지 [ ${count} 장 ]을 바탕으로 결과물을 만듭니다.`; document.getElementById('exportModal').classList.remove('hidden'); }
-        function closeExportModal() { document.getElementById('exportModal').classList.add('hidden'); }
-        // [초고속 내보내기 엔진] 가상 캔버스 폐기 (순수 수학 연산) + 스마트 데이터 다이어트 적용
-        // [초고속 내보내기 엔진] 가상 캔버스 폐기 + 스마트 데이터 다이어트 적용
+        function openExportModal() {
+            const grid = document.getElementById('pageGrid');
+            if (grid.children.length === 0) return showToast('내보낼 페이지가 없습니다.', true);
+            document.getElementById('exportModal').classList.remove('hidden');
+        }
+        function closeExportModal() {
+            document.getElementById('exportModal').classList.add('hidden');
+        }
+
         async function executeExport() {
             closeExportModal();
             const grid = document.getElementById('pageGrid');
             const format = document.getElementById('exportFormat').value;
+            const rangeType = document.querySelector('input[name="exportRange"]:checked').value;
 
-            let targets = Array.from(grid.children);
-            if (currentExportTarget === 'selected') {
-                targets = targets.filter(el => el.classList.contains('selected-page'));
+            let targets = [];
+            const allPages = Array.from(grid.children);
+
+            // [로직] 사용자가 선택한 범위에 맞춰 타겟 추출 (인쇄 기능과 동일한 지능형 엔진)
+            if (rangeType === 'all') {
+                targets = allPages;
+            } else if (rangeType === 'selected') {
+                targets = allPages.filter(el => el.classList.contains('selected-page'));
+                if (targets.length === 0) return showToast('선택된 페이지가 없습니다.', true);
+            } else if (rangeType === 'custom') {
+                const rangeStr = document.getElementById('exportRangeInput').value.trim();
+                if (!rangeStr) return showToast('페이지 범위를 입력하세요.', true);
+
+                const indices = new Set();
+                const parts = rangeStr.split(',');
+                for (let part of parts) {
+                    part = part.trim();
+                    if (part.includes('-')) {
+                        const [start, end] = part.split('-').map(n => parseInt(n));
+                        if (!isNaN(start) && !isNaN(end) && start <= end) {
+                            for (let i = start; i <= end; i++) indices.add(i - 1);
+                        }
+                    } else {
+                        const n = parseInt(part);
+                        if (!isNaN(n)) indices.add(n - 1);
+                    }
+                }
+
+                const sortedIndices = Array.from(indices).sort((a, b) => a - b);
+                targets = sortedIndices.filter(i => i >= 0 && i < allPages.length).map(i => allPages[i]);
+                if (targets.length === 0) return showToast('유효한 페이지 범위가 아닙니다.', true);
             }
 
             let defaultW = 800, defaultH = 1131;
@@ -1773,7 +1894,7 @@
                 return { x: left + rx, y: top + ry };
             };
 
-            const totalPages = grid.children.length;
+            const totalPages = targets.length; // [수정] 쪽번호 변수(전체 쪽수)를 타겟 배열의 길이로 보정
             const seq = [];
 
             const exportCanvasEl = document.createElement('canvas');
@@ -1808,13 +1929,14 @@
                     if (g.data.isPageNumObj && clone.type && clone.type.includes('text')) {
                         let pNum = g.data.pageNumStart + (pageIndex - g.dynamicStartIdx);
                         let rangeTotal = g.dynamicEndIdx - g.dynamicStartIdx + 1;
-                        clone.text = g.data.pageNumTemplate.replace(/{p}/g, pNum).replace(/{t}/g, rangeTotal).replace(/{a}/g, totalPages);
+                        clone.text = g.data.pageNumTemplate.replace(/{p}/g, pNum).replace(/{t}/g, rangeTotal).replace(/{a}/g, grid.children.length); // {a}는 진짜 원본 전체 문서 수 유지
                     }
                     localObjects.push(clone);
                 });
 
-                const vectorObjects = localObjects.filter(o => !['path', 'line'].includes(o.type));
-                const rasterObjects = localObjects.filter(o => ['path', 'line'].includes(o.type));
+                // [신규] 배경색이나 외곽선 테두리가 들어간 고급 텍스트는 이미지로 구워내서 PDF에 얹어버리는 마법!
+                const vectorObjects = localObjects.filter(o => !['path', 'line'].includes(o.type) && !(o.type === 'i-text' && (o.backgroundColor || o.boxStrokeWidth > 0)));
+                const rasterObjects = localObjects.filter(o => ['path', 'line'].includes(o.type) || (o.type === 'i-text' && (o.backgroundColor || o.boxStrokeWidth > 0)));
 
                 let rasterOverlayUrl = null;
                 if (rasterObjects.length > 0) {
@@ -1835,7 +1957,6 @@
                 const shapes = vectorObjects.map(o => {
                     const center = calcCenter(o);
 
-                    // [핵심 해결] 파이썬이 못 읽는 rgba 포맷을 원래의 #RRGGBB 포맷으로 번역해서 보냅니다!
                     let fColor = o.fill;
                     let fAlpha = 1;
                     if (fColor && fColor.startsWith('rgba')) {
@@ -1884,7 +2005,8 @@
             }
 
             try {
-                const r = await pywebview.api.export_pages(seq, { format, target: currentExportTarget });
+                // 파이썬으로 쏠 때는 기존 로직('currentExportTarget' 대신 'all' 고정 전송)을 사용합니다. 어차피 seq 배열 자체가 이미 필터링되어 넘어갑니다.
+                const r = await pywebview.api.export_pages(seq, { format, target: 'all' });
 
                 stopProgressPolling();
                 const shield = document.getElementById('ultimate-shield');
@@ -1902,7 +2024,192 @@
             }
         }
 
+        // ==========================================
+        // [신규] 인쇄 팝업 제어 및 인쇄 실행 엔진
+        // ==========================================
+        function openPrintModal() {
+            const grid = document.getElementById('pageGrid');
+            if (grid.children.length === 0) return showToast('인쇄할 페이지가 없습니다.', true);
+            document.getElementById('printModal').classList.remove('hidden');
+        }
 
+        function closePrintModal() {
+            document.getElementById('printModal').classList.add('hidden');
+        }
+
+        async function executePrint() {
+            closePrintModal();
+            const grid = document.getElementById('pageGrid');
+            const rangeType = document.querySelector('input[name="printRange"]:checked').value;
+
+            let targets = [];
+            const allPages = Array.from(grid.children);
+
+            // [로직] 사용자가 선택한 범위에 맞춰 타겟 추출
+            if (rangeType === 'all') {
+                targets = allPages;
+            } else if (rangeType === 'selected') {
+                targets = allPages.filter(el => el.classList.contains('selected-page'));
+                if (targets.length === 0) return showToast('선택된 페이지가 없습니다.', true);
+            } else if (rangeType === 'custom') {
+                const rangeStr = document.getElementById('printRangeInput').value.trim();
+                if (!rangeStr) return showToast('페이지 범위를 입력하세요.', true);
+
+                const indices = new Set();
+                const parts = rangeStr.split(',');
+                for (let part of parts) {
+                    part = part.trim();
+                    if (part.includes('-')) {
+                        const [start, end] = part.split('-').map(n => parseInt(n));
+                        if (!isNaN(start) && !isNaN(end) && start <= end) {
+                            for (let i = start; i <= end; i++) indices.add(i - 1);
+                        }
+                    } else {
+                        const n = parseInt(part);
+                        if (!isNaN(n)) indices.add(n - 1);
+                    }
+                }
+
+                const sortedIndices = Array.from(indices).sort((a, b) => a - b);
+                targets = sortedIndices.filter(i => i >= 0 && i < allPages.length).map(i => allPages[i]);
+                if (targets.length === 0) return showToast('유효한 페이지 범위가 아닙니다.', true);
+            }
+
+            // 공통 객체 처리 수학 연산 (export와 완벽히 동일한 방어적 복사 사용)
+            let defaultW = 800, defaultH = 1131;
+            for (const key in window.pageEdits) {
+                if (window.pageEdits[key].canvasWidth) {
+                    defaultW = window.pageEdits[key].canvasWidth;
+                    defaultH = window.pageEdits[key].canvasHeight;
+                    break;
+                }
+            }
+
+            const calcCenter = (o) => {
+                let left = o.left || 0; let top = o.top || 0; let angle = o.angle || 0;
+                let scaleX = o.scaleX !== undefined ? o.scaleX : 1; let scaleY = o.scaleY !== undefined ? o.scaleY : 1;
+                let width = (o.width || 0) * scaleX; let height = (o.height || 0) * scaleY;
+                let originX = o.originX || 'left'; let originY = o.originY || 'top';
+                if (originX === 'center' && originY === 'center') return { x: left, y: top };
+                let offsetX = 0; let offsetY = 0;
+                if (originX === 'left') offsetX = width / 2; else if (originX === 'right') offsetX = -width / 2;
+                if (originY === 'top') offsetY = height / 2; else if (originY === 'bottom') offsetY = -height / 2;
+                let rad = angle * Math.PI / 180;
+                let rx = offsetX * Math.cos(rad) - offsetY * Math.sin(rad);
+                let ry = offsetX * Math.sin(rad) + offsetY * Math.cos(rad);
+                return { x: left + rx, y: top + ry };
+            };
+
+            const totalPages = allPages.length;
+            const seq = [];
+            const exportCanvasEl = document.createElement('canvas');
+            const exportCanvas = new fabric.StaticCanvas(exportCanvasEl);
+
+            for (const el of targets) {
+                const id = el.dataset.id;
+                const info = window.pageEdits[id] || null;
+                const pageIndex = allPages.indexOf(el);
+                const rotation = info ? (info.rotation || 0) : 0;
+
+                let localObjects = [];
+                if (info && info.fabric) {
+                    try {
+                        const parsed = JSON.parse(info.fabric);
+                        localObjects = (parsed.objects || []).filter(o => !o.isSyncObj && !(o.isPdfText && o.fill === 'transparent'));
+                    } catch (e) { }
+                }
+
+                const globals = getApplicableGlobals(pageIndex);
+
+                if (localObjects.length === 0 && globals.length === 0 && rotation === 0) {
+                    seq.push({ source: el.dataset.source, page_index: parseInt(el.dataset.pageIndex) });
+                    continue;
+                }
+
+                const canvasW = (info && info.canvasWidth) ? info.canvasWidth : defaultW;
+                const canvasH = (info && info.canvasHeight) ? info.canvasHeight : defaultH;
+
+                globals.forEach(g => {
+                    let clone = JSON.parse(JSON.stringify(g.data.fabricData));
+                    if (g.data.isPageNumObj && clone.type && clone.type.includes('text')) {
+                        let pNum = g.data.pageNumStart + (pageIndex - g.dynamicStartIdx);
+                        let rangeTotal = g.dynamicEndIdx - g.dynamicStartIdx + 1;
+                        clone.text = g.data.pageNumTemplate.replace(/{p}/g, pNum).replace(/{t}/g, rangeTotal).replace(/{a}/g, totalPages);
+                    }
+                    localObjects.push(clone);
+                });
+
+                // [신규] 배경색이나 외곽선 테두리가 들어간 고급 텍스트는 이미지로 구워내서 PDF에 얹어버리는 마법!
+                const vectorObjects = localObjects.filter(o => !['path', 'line'].includes(o.type) && !(o.type === 'i-text' && (o.backgroundColor || o.boxStrokeWidth > 0)));
+                const rasterObjects = localObjects.filter(o => ['path', 'line'].includes(o.type) || (o.type === 'i-text' && (o.backgroundColor || o.boxStrokeWidth > 0)));
+
+                let rasterOverlayUrl = null;
+                if (rasterObjects.length > 0) {
+                    exportCanvas.setWidth(canvasW);
+                    exportCanvas.setHeight(canvasH);
+                    exportCanvas.clear();
+
+                    await new Promise(resolve => {
+                        fabric.util.enlivenObjects(rasterObjects, function (objs) {
+                            objs.forEach(obj => exportCanvas.add(obj));
+                            exportCanvas.renderAll();
+                            rasterOverlayUrl = exportCanvas.toDataURL({ format: 'png', multiplier: 3 });
+                            resolve();
+                        });
+                    });
+                }
+
+                const shapes = vectorObjects.map(o => {
+                    const center = calcCenter(o);
+                    let fColor = o.fill; let fAlpha = 1;
+                    if (fColor && fColor.startsWith('rgba')) {
+                        let parts = fColor.match(/[\d.]+/g);
+                        if (parts && parts.length >= 3) {
+                            let r = parseInt(parts[0]).toString(16).padStart(2, '0'); let g = parseInt(parts[1]).toString(16).padStart(2, '0'); let b = parseInt(parts[2]).toString(16).padStart(2, '0');
+                            fAlpha = parts.length === 4 ? parseFloat(parts[3]) : 1;
+                            fColor = (fAlpha === 0) ? null : `#${r}${g}${b}`;
+                        }
+                    } else if (fColor === 'transparent') fColor = null;
+
+                    let sColor = o.stroke; let sAlpha = 1;
+                    if (sColor && sColor.startsWith('rgba')) {
+                        let parts = sColor.match(/[\d.]+/g);
+                        if (parts && parts.length >= 3) {
+                            let r = parseInt(parts[0]).toString(16).padStart(2, '0'); let g = parseInt(parts[1]).toString(16).padStart(2, '0'); let b = parseInt(parts[2]).toString(16).padStart(2, '0');
+                            sAlpha = parts.length === 4 ? parseFloat(parts[3]) : 1;
+                            sColor = (sAlpha === 0) ? null : `#${r}${g}${b}`;
+                        }
+                    } else if (sColor === 'transparent') sColor = null;
+
+                    let baseOpacity = (o.opacity !== undefined) ? o.opacity : 1;
+                    let finalOpacity = baseOpacity * Math.min(fAlpha, sAlpha);
+
+                    return {
+                        type: o.type, left: o.left, top: o.top, centerX: center.x, centerY: center.y, width: o.width, height: o.height, radius: o.radius, scaleX: o.scaleX || 1, scaleY: o.scaleY || 1, angle: o.angle || 0, flipX: o.flipX || false, flipY: o.flipY || false, fill: fColor, stroke: sColor, strokeWidth: o.strokeWidth || 0, opacity: finalOpacity, text: o.text || null, fontSize: o.fontSize || 48, fontFamily: o.fontFamily || 'Arial', src: o.src || null, canvasWidth: canvasW, canvasHeight: canvasH, isWhiteout: o.isWhiteout || false
+                    };
+                });
+                seq.push({ source: el.dataset.source, page_index: parseInt(el.dataset.pageIndex), shapes: shapes, rotation: rotation, rasterOverlay: rasterOverlayUrl });
+            }
+
+            try {
+                // [신규] 생성된 파이프라인 데이터를 파이썬의 인쇄 엔진으로 발사합니다.
+                const r = await pywebview.api.print_pages(seq);
+
+                stopProgressPolling();
+                const shield = document.getElementById('ultimate-shield');
+                if (shield) shield.remove();
+                hideLoading();
+
+                if (r.success) showToast(`프린터로 문서를 전송했습니다.`);
+                else if (r.error !== '취소') showModal('오류', r.error);
+            } catch (e) {
+                stopProgressPolling();
+                const shield = document.getElementById('ultimate-shield');
+                if (shield) shield.remove();
+                hideLoading();
+                showModal('오류', '통신 오류');
+            }
+        }
 
 
 
@@ -1972,9 +2279,27 @@
         let ctxMenuCanvasPos = { left: 0, top: 0 }; let ctxTargetObject = null;
         const syncHiddenCanvas = new fabric.StaticCanvas(null, { width: 800, height: 1131 });
 
-        window.EXTRA_PROPS = ['isWhiteout', 'isTextObj', 'syncId', 'isPageNumObj', 'isSyncObj', 'syncStartPageId', 'syncEndPageId', 'syncApplyToEnd', 'pageNumStart', 'pageNumTemplate', 'perPixelTargetFind', 'targetFindTolerance', 'isPdfText', 'editable'];
+        // [수정] 텍스트 박스 테두리 속성(boxStroke, boxStrokeWidth) 추가 및 지우개 회전 잠금
+        window.EXTRA_PROPS = ['isWhiteout', 'isTextObj', 'syncId', 'isPageNumObj', 'isSyncObj', 'syncStartPageId', 'syncEndPageId', 'syncApplyToEnd', 'pageNumStart', 'pageNumTemplate', 'perPixelTargetFind', 'targetFindTolerance', 'isPdfText', 'editable', 'boxStroke', 'boxStrokeWidth', 'lockRotation', 'hasRotatingPoint'];
         window.isCreatingNewPageNum = false;
         window.isGlobalChanged = false;
+
+        // [핵심] 글씨 테두리가 아닌 '텍스트 박스 테두리'를 그리기 위해 패브릭 엔진 오버라이딩
+        fabric.IText.prototype._renderBackground = function (ctx) {
+            if (this.backgroundColor) {
+                ctx.fillStyle = this.backgroundColor;
+                ctx.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
+            }
+            if (this.boxStroke && this.boxStrokeWidth > 0) {
+                ctx.save();
+                ctx.strokeStyle = this.boxStroke;
+                ctx.lineWidth = this.boxStrokeWidth;
+                ctx.beginPath();
+                ctx.rect(-this.width / 2, -this.height / 2, this.width, this.height);
+                ctx.stroke();
+                ctx.restore();
+            }
+        };
 
         window.addEventListener('click', function (e) { if (e.button !== 2 && !e.target.closest('#canvasContextMenu')) { const menu = document.getElementById('canvasContextMenu'); if (menu) menu.classList.add('hidden'); } });
 
@@ -2099,12 +2424,9 @@
                 canvas = new fabric.Canvas('fabricCanvas', { preserveObjectStacking: true, selection: true, fireRightClick: true, stopContextMenu: true });
                 canvas.uniformScaling = false;
 
-                // [완벽 해결] Shift를 누르면 붓을 아예 차단하여 에러 및 충돌을 원천 봉쇄합니다.
                 if (!canvas._shiftListenerAdded) {
                     window.addEventListener('keydown', function (e) {
-                        if (e.key === 'Shift' && canvas && canvas.isDrawingMode) {
-                            canvas.isDrawingMode = false;
-                        }
+                        if (e.key === 'Shift' && canvas && canvas.isDrawingMode) canvas.isDrawingMode = false;
                     });
                     window.addEventListener('keyup', function (e) {
                         if (e.key === 'Shift' && canvas && !canvas.isDrawingMode && (editorDrawMode === 'highlight' || editorDrawMode === 'free')) {
@@ -2118,15 +2440,8 @@
 
                 canvas.on('path:created', function (e) {
                     e.path.set({ transparentCorners: false, cornerColor: '#4f46e5', borderColor: '#4f46e5', perPixelTargetFind: true, targetFindTolerance: 4 });
-
-                    if (editorDrawMode === 'highlight') {
-                        e.path.set({ globalCompositeOperation: 'multiply' });
-                    }
-
-                    setDrawingMode('none');
-                    canvas.setActiveObject(e.path);
-                    canvas.renderAll();
-                    saveCanvasState();
+                    if (editorDrawMode === 'highlight') e.path.set({ globalCompositeOperation: 'multiply' });
+                    setDrawingMode('none'); canvas.setActiveObject(e.path); canvas.renderAll(); saveCanvasState();
                 });
 
                 canvas.on('object:modified', function (e) {
@@ -2150,10 +2465,20 @@
                     }
                 });
 
+                // [신규] 마우스로 개체를 회전시킬 때 상단 입력창의 숫자도 실시간으로 돌아가도록 반영
+                canvas.on('object:rotating', function (e) {
+                    if (document.getElementById('rotationPicker') && e.target) {
+                        document.getElementById('rotationPicker').value = parseFloat((e.target.angle || 0).toFixed(1));
+                    }
+                });
+
                 canvas.on('object:removed', () => saveCanvasState());
                 canvas.on('selection:created', syncPropertiesFromSelection);
                 canvas.on('selection:updated', syncPropertiesFromSelection);
-                canvas.on('selection:cleared', () => { });
+                canvas.on('selection:cleared', () => {
+                    // 선택이 풀리면 회전 입력창 잠금을 다시 풀어줍니다.
+                    if (document.getElementById('rotationPicker')) document.getElementById('rotationPicker').disabled = false;
+                });
 
                 canvas.on('mouse:down', function (options) {
                     if (options.button === 3) {
@@ -2170,6 +2495,12 @@
                             if (options.target.type === 'i-text') {
                                 let parsed = rgbaToHexAndTrans(options.target.fill);
                                 if (document.getElementById('ctxTextColor')) document.getElementById('ctxTextColor').value = parsed.isTransparent ? '#000000' : parsed.hex;
+
+                                let bgParsed = rgbaToHexAndTrans(options.target.backgroundColor);
+                                if (document.getElementById('ctxFillColor')) document.getElementById('ctxFillColor').value = bgParsed.isTransparent ? '#ffffff' : bgParsed.hex;
+
+                                let sParsed = rgbaToHexAndTrans(options.target.stroke);
+                                if (document.getElementById('ctxStrokeColor')) document.getElementById('ctxStrokeColor').value = sParsed.isTransparent ? '#000000' : sParsed.hex;
                             } else {
                                 let fParsed = rgbaToHexAndTrans(options.target.fill);
                                 if (document.getElementById('ctxFillColor')) document.getElementById('ctxFillColor').value = fParsed.isTransparent ? '#ffffff' : fParsed.hex;
@@ -2185,13 +2516,10 @@
                         canvas.renderAll();
                     } else {
                         if (editorDrawMode === 'line' || ((editorDrawMode === 'highlight' || editorDrawMode === 'free') && options.e.shiftKey)) {
-                            // 이미 단축키 이벤트로 isDrawingMode가 false 상태이므로 깔끔하게 직선 모드만 실행됩니다.
                             if (canvas.isDrawingMode) {
                                 canvas.isDrawingMode = false;
                                 const objs = canvas.getObjects();
-                                if (objs.length > 0 && objs[objs.length - 1].type === 'path') {
-                                    canvas.remove(objs[objs.length - 1]);
-                                }
+                                if (objs.length > 0 && objs[objs.length - 1].type === 'path') canvas.remove(objs[objs.length - 1]);
                             }
 
                             const pointer = canvas.getPointer(options.e);
@@ -2208,37 +2536,23 @@
                             let isHighlighter = (editorDrawMode === 'highlight');
 
                             tempLine = new fabric.Line(points, {
-                                strokeWidth: lineStrokeWidth,
-                                fill: null,
-                                stroke: finalStrokeColor,
-                                originX: 'center',
-                                originY: 'center',
-                                selectable: false,
-                                evented: false,
-                                strokeLineCap: 'round',
-                                strokeLineJoin: 'round',
-                                perPixelTargetFind: true,
-                                targetFindTolerance: 4,
-                                globalCompositeOperation: isHighlighter ? 'multiply' : 'source-over'
+                                strokeWidth: lineStrokeWidth, fill: null, stroke: finalStrokeColor, originX: 'center', originY: 'center', selectable: false, evented: false, strokeLineCap: 'round', strokeLineJoin: 'round', perPixelTargetFind: true, targetFindTolerance: 4, globalCompositeOperation: isHighlighter ? 'multiply' : 'source-over'
                             });
                             canvas.add(tempLine);
                         }
                         else if (['rect', 'circle', 'triangle', 'whiteout'].includes(editorDrawMode)) {
                             const pointer = canvas.getPointer(options.e);
-                            startX = pointer.x;
-                            startY = pointer.y;
+                            startX = pointer.x; startY = pointer.y;
 
                             let fColor = getRgbaColor('fillColorPicker', 'fillOpacity');
                             let sColor = getRgbaColor('strokeColorPicker', 'strokeOpacity');
                             let sWidth = parseInt(document.getElementById('strokeWidthPicker').value) || 4;
 
-                            let commonProps = {
-                                left: startX, top: startY, fill: fColor, stroke: sColor, strokeWidth: sWidth, strokeUniform: true, cornerColor: '#4f46e5', borderColor: '#4f46e5', transparentCorners: false, selectable: false, evented: false
-                            };
+                            let commonProps = { left: startX, top: startY, fill: fColor, stroke: sColor, strokeWidth: sWidth, strokeUniform: true, cornerColor: '#4f46e5', borderColor: '#4f46e5', transparentCorners: false, selectable: false, evented: false };
 
                             if (editorDrawMode === 'whiteout') {
                                 commonProps.fill = '#ffffff'; commonProps.stroke = null; commonProps.strokeWidth = 0; commonProps.isWhiteout = true;
-                                tempShape = new fabric.Rect({ ...commonProps, width: 0, height: 0 });
+                                tempShape = new fabric.Rect({ ...commonProps, width: 0, height: 0, lockRotation: true, hasRotatingPoint: false });
                             } else if (editorDrawMode === 'rect') {
                                 tempShape = new fabric.Rect({ ...commonProps, width: 0, height: 0 });
                             } else if (editorDrawMode === 'circle') {
@@ -2253,27 +2567,13 @@
                             const fontFamily = document.getElementById('fontFamilyPicker').value;
                             const fillRgba = getRgbaColor('textColorPicker', 'textTransparencyPicker');
 
-                            const currentMode = editorDrawMode;
-
-                            if (currentMode === 'text') {
-                                const text = new fabric.IText('더블클릭하여 내용 수정', { left: pointer.x, top: pointer.y, fontFamily: fontFamily, fontSize: 48, fill: fillRgba, backgroundColor: 'transparent', strokeWidth: 0, stroke: null, cornerColor: '#4f46e5', borderColor: '#4f46e5', transparentCorners: false, isTextObj: true });
-                                canvas.add(text);
-
-                                setDrawingMode('none');
-                                canvas.setActiveObject(text);
-                                canvas.renderAll();
-                                saveCanvasState();
-                            } else if (currentMode === 'pageNum') {
-                                const text = new fabric.IText('- 1 -', { left: pointer.x, top: pointer.y, fontFamily: fontFamily, fontSize: 48, fill: fillRgba, backgroundColor: 'transparent', strokeWidth: 0, stroke: null, cornerColor: '#4f46e5', borderColor: '#4f46e5', transparentCorners: false, isTextObj: true, isPageNumObj: true, editable: false });
-                                canvas.add(text);
-
-                                setDrawingMode('none');
-                                canvas.setActiveObject(text);
-                                canvas.renderAll();
-                                saveCanvasState();
-
-                                window.isCreatingNewPageNum = true;
-                                openSyncModal();
+                            if (editorDrawMode === 'text') {
+                                const text = new fabric.IText('더블클릭하여 내용 수정', { left: pointer.x, top: pointer.y, fontFamily: fontFamily, fontSize: 48, fill: fillRgba, backgroundColor: 'transparent', boxStroke: null, boxStrokeWidth: 0, strokeWidth: 0, stroke: null, cornerColor: '#4f46e5', borderColor: '#4f46e5', transparentCorners: false, isTextObj: true });
+                                canvas.add(text); setDrawingMode('none'); canvas.setActiveObject(text); canvas.renderAll(); saveCanvasState();
+                            } else if (editorDrawMode === 'pageNum') {
+                                const text = new fabric.IText('- 1 -', { left: pointer.x, top: pointer.y, fontFamily: fontFamily, fontSize: 48, fill: fillRgba, backgroundColor: 'transparent', boxStroke: null, boxStrokeWidth: 0, strokeWidth: 0, stroke: null, cornerColor: '#4f46e5', borderColor: '#4f46e5', transparentCorners: false, isTextObj: true, isPageNumObj: true, editable: false });
+                                canvas.add(text); setDrawingMode('none'); canvas.setActiveObject(text); canvas.renderAll(); saveCanvasState();
+                                window.isCreatingNewPageNum = true; openSyncModal();
                             }
                         }
                     }
@@ -2281,9 +2581,7 @@
 
                 canvas.on('mouse:move', function (options) {
                     if (tempLine && (editorDrawMode === 'line' || editorDrawMode === 'highlight' || editorDrawMode === 'free')) {
-                        const pointer = canvas.getPointer(options.e);
-                        tempLine.set({ x2: pointer.x, y2: pointer.y });
-                        canvas.renderAll();
+                        const pointer = canvas.getPointer(options.e); tempLine.set({ x2: pointer.x, y2: pointer.y }); canvas.renderAll();
                     }
                     else if (tempShape && ['rect', 'circle', 'triangle', 'whiteout'].includes(editorDrawMode)) {
                         const pointer = canvas.getPointer(options.e);
@@ -2302,41 +2600,20 @@
 
                 canvas.on('mouse:up', function (options) {
                     if (tempLine) {
-                        tempLine.setCoords();
-                        tempLine.set({ selectable: true, evented: true });
-
-                        setDrawingMode('none');
-                        canvas.setActiveObject(tempLine);
-                        canvas.renderAll();
-
-                        tempLine = null;
-                        saveCanvasState();
+                        tempLine.setCoords(); tempLine.set({ selectable: true, evented: true });
+                        setDrawingMode('none'); canvas.setActiveObject(tempLine); canvas.renderAll(); tempLine = null; saveCanvasState();
                     }
                     else if (tempShape) {
-                        if (tempShape.type === 'circle') {
-                            if (tempShape.radius < 5) tempShape.set({ radius: 50 });
-                        } else {
-                            if (tempShape.width < 5 || tempShape.height < 5) {
-                                tempShape.set({ width: 100, height: 100 });
-                            }
-                        }
-
-                        tempShape.setCoords();
-                        tempShape.set({ selectable: true, evented: true });
-
-                        setDrawingMode('none');
-                        canvas.setActiveObject(tempShape);
-                        canvas.renderAll();
-
-                        tempShape = null;
-                        saveCanvasState();
+                        if (tempShape.type === 'circle') { if (tempShape.radius < 5) tempShape.set({ radius: 50 }); }
+                        else { if (tempShape.width < 5 || tempShape.height < 5) tempShape.set({ width: 100, height: 100 }); }
+                        tempShape.setCoords(); tempShape.set({ selectable: true, evented: true });
+                        setDrawingMode('none'); canvas.setActiveObject(tempShape); canvas.renderAll(); tempShape = null; saveCanvasState();
                     }
                 });
+
                 canvas.on('mouse:dblclick', function (options) {
                     if (options.target && options.target.isPageNumObj) {
-                        options.target.set('editable', false); // 혹시 모를 기존 객체 보호 (텍스트 커서 차단)
-                        window.isCreatingNewPageNum = false; // 기존 객체를 수정하는 것이므로 false
-                        openSyncModal();
+                        options.target.set('editable', false); window.isCreatingNewPageNum = false; openSyncModal();
                     }
                 });
             }
@@ -2354,6 +2631,30 @@
                 }
                 if (document.getElementById('fontFamilyPicker')) document.getElementById('fontFamilyPicker').value = activeObj.fontFamily;
                 if (document.getElementById('fontSizePicker')) document.getElementById('fontSizePicker').value = Math.round(activeObj.fontSize);
+
+                let bgParsed = rgbaToHexAndTrans(activeObj.backgroundColor);
+                if (!bgParsed.isTransparent) {
+                    if (document.getElementById('fillColorPicker')) document.getElementById('fillColorPicker').value = bgParsed.hex;
+                    if (document.getElementById('fillOpacity')) document.getElementById('fillOpacity').value = bgParsed.trans;
+                } else {
+                    if (document.getElementById('fillColorPicker')) document.getElementById('fillColorPicker').value = '#ffffff';
+                    if (document.getElementById('fillOpacity')) document.getElementById('fillOpacity').value = 100; // [수정] 100이 완전 투명입니다!
+                }
+
+                let sParsed = rgbaToHexAndTrans(activeObj.boxStroke);
+                if (!sParsed.isTransparent) {
+                    if (document.getElementById('strokeColorPicker')) document.getElementById('strokeColorPicker').value = sParsed.hex;
+                    if (document.getElementById('strokeOpacity')) document.getElementById('strokeOpacity').value = sParsed.trans;
+                } else {
+                    if (document.getElementById('strokeColorPicker')) document.getElementById('strokeColorPicker').value = '#000000';
+                    if (document.getElementById('strokeOpacity')) document.getElementById('strokeOpacity').value = 100; // [수정] 100이 완전 투명입니다!
+                }
+
+                if (activeObj.boxStrokeWidth !== undefined && activeObj.boxStrokeWidth > 0 && !sParsed.isTransparent) {
+                    if (document.getElementById('strokeWidthPicker')) document.getElementById('strokeWidthPicker').value = activeObj.boxStrokeWidth;
+                } else {
+                    if (document.getElementById('strokeWidthPicker')) document.getElementById('strokeWidthPicker').value = 0;
+                }
             } else {
                 let fParsed = rgbaToHexAndTrans(activeObj.fill);
                 if (!fParsed.isTransparent) {
@@ -2361,7 +2662,7 @@
                     if (document.getElementById('fillOpacity')) document.getElementById('fillOpacity').value = fParsed.trans;
                 } else {
                     if (document.getElementById('fillColorPicker')) document.getElementById('fillColorPicker').value = '#ffffff';
-                    if (document.getElementById('fillOpacity')) document.getElementById('fillOpacity').value = 0;
+                    if (document.getElementById('fillOpacity')) document.getElementById('fillOpacity').value = 100; // [수정] 100이 완전 투명입니다!
                 }
 
                 let sParsed = rgbaToHexAndTrans(activeObj.stroke);
@@ -2370,12 +2671,27 @@
                     if (document.getElementById('strokeOpacity')) document.getElementById('strokeOpacity').value = sParsed.trans;
                 } else {
                     if (document.getElementById('strokeColorPicker')) document.getElementById('strokeColorPicker').value = '#000000';
-                    if (document.getElementById('strokeOpacity')) document.getElementById('strokeOpacity').value = 0;
+                    if (document.getElementById('strokeOpacity')) document.getElementById('strokeOpacity').value = 100; // [수정] 100이 완전 투명입니다!
                 }
 
-                if (activeObj.strokeWidth !== undefined && activeObj.strokeWidth > 0) {
+                if (activeObj.strokeWidth !== undefined && activeObj.strokeWidth > 0 && !sParsed.isTransparent) {
                     if (document.getElementById('strokeWidthPicker')) document.getElementById('strokeWidthPicker').value = activeObj.strokeWidth;
+                } else {
+                    if (document.getElementById('strokeWidthPicker')) document.getElementById('strokeWidthPicker').value = 0;
                 }
+            }
+
+            if (document.getElementById('rotationPicker')) {
+                let currentAngle = activeObj.angle || 0;
+                document.getElementById('rotationPicker').value = parseFloat(currentAngle.toFixed(1));
+
+                // [신규] 지우개를 선택하면 회전 입력창을 아예 비활성화 (회색 처리)
+                document.getElementById('rotationPicker').disabled = activeObj.isWhiteout ? true : false;
+            }
+
+            // [신규] 예전에 저장된 파일에서 불러온 지우개라도 클릭하는 즉시 회전 방지 적용!
+            if (activeObj.isWhiteout) {
+                activeObj.set({ lockRotation: true, hasRotatingPoint: false });
             }
         }
 
@@ -2403,35 +2719,20 @@
 
             let targetMode = editorDrawMode;
             if (activeObj) {
-                if (activeObj.type === 'path' || activeObj.type === 'line') {
-                    targetMode = (activeObj.globalCompositeOperation === 'multiply') ? 'highlight' : 'line';
-                } else if (['rect', 'circle', 'triangle'].includes(activeObj.type)) {
-                    targetMode = 'rect';
-                }
+                if (activeObj.type === 'path' || activeObj.type === 'line') targetMode = (activeObj.globalCompositeOperation === 'multiply') ? 'highlight' : 'line';
+                else if (['rect', 'circle', 'triangle'].includes(activeObj.type)) targetMode = 'rect';
             }
 
             if (targetMode === 'highlight') {
                 if (property === 'strokeWidth') savedHighlightProps.width = value;
-                if (property === 'stroke' || value === null) {
-                    savedHighlightProps.color = document.getElementById('strokeColorPicker').value;
-                    savedHighlightProps.opacity = document.getElementById('strokeOpacity').value;
-                }
+                if (property === 'stroke' || value === null) { savedHighlightProps.color = document.getElementById('strokeColorPicker').value; savedHighlightProps.opacity = document.getElementById('strokeOpacity').value; }
             } else if (targetMode === 'line' || targetMode === 'free') {
                 if (property === 'strokeWidth') savedLineProps.width = value;
-                if (property === 'stroke' || value === null) {
-                    savedLineProps.color = document.getElementById('strokeColorPicker').value;
-                    savedLineProps.opacity = document.getElementById('strokeOpacity').value;
-                }
+                if (property === 'stroke' || value === null) { savedLineProps.color = document.getElementById('strokeColorPicker').value; savedLineProps.opacity = document.getElementById('strokeOpacity').value; }
             } else if (['rect', 'circle', 'triangle'].includes(targetMode)) {
                 if (property === 'strokeWidth') savedShapeProps.width = value;
-                if (property === 'stroke' || value === null) {
-                    savedShapeProps.stroke = document.getElementById('strokeColorPicker').value;
-                    savedShapeProps.strokeOpacity = document.getElementById('strokeOpacity').value;
-                }
-                if (property === 'fill' || value === null) {
-                    savedShapeProps.fill = document.getElementById('fillColorPicker').value;
-                    savedShapeProps.fillOpacity = document.getElementById('fillOpacity').value;
-                }
+                if (property === 'stroke' || value === null) { savedShapeProps.stroke = document.getElementById('strokeColorPicker').value; savedShapeProps.strokeOpacity = document.getElementById('strokeOpacity').value; }
+                if (property === 'fill' || value === null) { savedShapeProps.fill = document.getElementById('fillColorPicker').value; savedShapeProps.fillOpacity = document.getElementById('fillOpacity').value; }
             }
 
             if (typeof editorDrawMode !== 'undefined' && (editorDrawMode === 'free' || editorDrawMode === 'highlight')) {
@@ -2443,39 +2744,71 @@
                 if (activeObj.isWhiteout && (property === 'stroke' || property === 'strokeWidth' || (property === 'fill' && value !== '#ffffff'))) {
                     showToast("지우개는 테두리나 색상을 지정할 수 없습니다.", true); return;
                 }
-                if (activeObj.type === 'i-text' && (property === 'stroke' || property === 'strokeWidth')) {
-                    showToast("텍스트는 테두리를 적용할 수 없습니다.", true); return;
+                if (activeObj.isWhiteout && property === 'angle') {
+                    showToast("지우개는 회전할 수 없습니다.", true); return;
                 }
                 if (isTextAction && activeObj.type !== 'i-text') return;
-                if (!isTextAction && property === 'fill' && activeObj.type === 'i-text') return;
 
-                if (property === 'strokeWidth') {
-                    if (value === 0) activeObj.set({ strokeWidth: 0, stroke: null, dirty: true });
-                    else {
-                        activeObj.set('strokeWidth', value);
-                        if (!activeObj.stroke || activeObj.stroke === 'transparent') activeObj.set('stroke', getRgbaColor('strokeColorPicker', 'strokeOpacity'));
-                    }
-                } else if (property === 'stroke') {
-                    // [완벽 해결] 투명도 슬라이더(null) 작동 시 선이 완전히 증발하던 버그 차단
-                    if (finalColor === 'transparent' || finalColor === 'rgba(0,0,0,0)') {
-                        activeObj.set({ stroke: null, strokeWidth: 0, dirty: true });
+                if (property === 'angle') {
+                    let center = activeObj.getCenterPoint();
+                    activeObj.set({ originX: 'center', originY: 'center', left: center.x, top: center.y, angle: value });
+                    activeObj.setCoords();
+                } else if (activeObj.type === 'i-text') {
+                    // [수정 및 추가] 텍스트 글꼴, 크기, 글자색, 배경색, 상자 테두리 분기 처리
+                    if (property === 'fontSize') {
+                        const newSize = parseInt(value) || 48;
+                        activeObj.set({ fontSize: newSize, scaleX: 1, scaleY: 1 });
+                        if (activeObj.isEditing) {
+                            activeObj.setSelectionStyles({ fontSize: newSize });
+                        }
+                    } else if (property === 'fontFamily') {
+                        activeObj.set('fontFamily', value);
+                        if (activeObj.isEditing) {
+                            activeObj.setSelectionStyles({ fontFamily: value });
+                        }
+                    } else if (isTextAction && property === 'fill') {
+                        activeObj.set('fill', finalColor === 'transparent' || finalColor === 'rgba(0,0,0,0)' ? '' : finalColor);
+                    } else if (!isTextAction && property === 'fill') {
+                        activeObj.set('backgroundColor', finalColor === 'transparent' || finalColor === 'rgba(0,0,0,0)' ? '' : finalColor);
+                    } else if (!isTextAction && property === 'stroke') {
+                        activeObj.set('boxStroke', finalColor === 'transparent' || finalColor === 'rgba(0,0,0,0)' ? '' : finalColor);
+                        if (!activeObj.boxStrokeWidth) activeObj.set('boxStrokeWidth', parseInt(document.getElementById('strokeWidthPicker').value) || 4);
+                    } else if (!isTextAction && property === 'strokeWidth') {
+                        activeObj.set('boxStrokeWidth', value);
                     } else {
-                        let sw = parseInt(document.getElementById('strokeWidthPicker').value) || 4;
-                        if (activeObj.strokeWidth === 0) activeObj.set('strokeWidth', sw);
-                        activeObj.set('stroke', finalColor);
+                        activeObj.set(property, value);
                     }
-                } else if (property === 'fill') {
-                    if (finalColor === 'transparent' || finalColor === 'rgba(0,0,0,0)') {
-                        activeObj.set({ fill: null, dirty: true });
-                    } else {
-                        activeObj.set('fill', finalColor);
-                    }
+                    activeObj.set('dirty', true);
+                    activeObj.setCoords(); // 글자 크기 변경 시 선택 영역 테두리 즉각 재계산
                 } else {
-                    activeObj.set(property, value);
+                    if (property === 'strokeWidth') {
+                        if (value === 0) activeObj.set({ strokeWidth: 0, stroke: null, dirty: true });
+                        else {
+                            activeObj.set('strokeWidth', value);
+                            if (!activeObj.stroke || activeObj.stroke === 'transparent') activeObj.set('stroke', getRgbaColor('strokeColorPicker', 'strokeOpacity'));
+                        }
+                    } else if (property === 'stroke') {
+                        if (finalColor === 'transparent' || finalColor === 'rgba(0,0,0,0)') {
+                            activeObj.set({ stroke: null, strokeWidth: 0, dirty: true });
+                        } else {
+                            let sw = parseInt(document.getElementById('strokeWidthPicker').value) || 4;
+                            if (activeObj.strokeWidth === 0) activeObj.set('strokeWidth', sw);
+                            activeObj.set('stroke', finalColor);
+                        }
+                    } else if (property === 'fill') {
+                        if (finalColor === 'transparent' || finalColor === 'rgba(0,0,0,0)') {
+                            activeObj.set({ fill: null, dirty: true });
+                        } else {
+                            activeObj.set('fill', finalColor);
+                        }
+                    } else {
+                        activeObj.set(property, value);
+                    }
                 }
 
                 if (activeObj.isSyncObj) updateGlobalObject(activeObj);
-                canvas.renderAll(); saveCanvasState();
+                canvas.renderAll();
+                saveCanvasState();
             }
         }
 
@@ -2596,20 +2929,35 @@
         }
 
         // 버튼을 눌러 추가할 때는 무조건 강제로 '선택 모드'로 되돌림!
-        function addWhiteout() { setDrawingMode('none'); const pos = getPlacementCoords(); const rect = new fabric.Rect({ left: pos.left, top: pos.top, fill: '#ffffff', width: 200, height: 100, stroke: null, strokeWidth: 0, strokeDashArray: null, strokeUniform: true, cornerColor: '#4f46e5', borderColor: '#4f46e5', transparentCorners: false, isWhiteout: true }); canvas.add(rect); canvas.setActiveObject(rect); }
-        function addShape(type) { setDrawingMode('none'); const props = getCommonProps(); let shape; if (type === 'rect') { props.width = 200; props.height = 150; shape = new fabric.Rect(props); } else if (type === 'circle') { props.radius = 75; shape = new fabric.Circle(props); } else if (type === 'triangle') { props.width = 150; props.height = 150; shape = new fabric.Triangle(props); } canvas.add(shape); canvas.setActiveObject(shape); }
-        function addText() { setDrawingMode('none'); const pos = getPlacementCoords(); const fontFamily = document.getElementById('fontFamilyPicker').value; const text = new fabric.IText('더블클릭하여 내용 수정', { left: pos.left, top: pos.top, fontFamily: fontFamily, fontSize: 48, fill: getRgbaColor('textColorPicker', 'textTransparencyPicker'), backgroundColor: 'transparent', strokeWidth: 0, stroke: null, cornerColor: '#4f46e5', borderColor: '#4f46e5', transparentCorners: false, isTextObj: true }); canvas.add(text); canvas.setActiveObject(text); }
+        function addWhiteout() { setDrawingMode('none'); const pos = getPlacementCoords(); const rect = new fabric.Rect({ left: pos.left, top: pos.top, fill: '#ffffff', width: 200, height: 100, stroke: null, strokeWidth: 0, strokeDashArray: null, strokeUniform: true, cornerColor: '#4f46e5', borderColor: '#4f46e5', transparentCorners: false, isWhiteout: true, lockRotation: true, hasRotatingPoint: false }); canvas.add(rect); canvas.setActiveObject(rect); }
+
+        function addShape(type) {
+            setDrawingMode('none');
+            const pos = getPlacementCoords();
+            let fColor = getRgbaColor('fillColorPicker', 'fillOpacity');
+            let sColor = getRgbaColor('strokeColorPicker', 'strokeOpacity');
+            let sw = parseInt(document.getElementById('strokeWidthPicker').value);
+            let sWidth = isNaN(sw) ? 4 : sw;
+            const props = { fill: fColor, stroke: sColor, strokeWidth: sWidth, strokeUniform: true, left: pos.left, top: pos.top, cornerColor: '#4f46e5', borderColor: '#4f46e5', transparentCorners: false };
+            let shape; if (type === 'rect') { props.width = 200; props.height = 150; shape = new fabric.Rect(props); } else if (type === 'circle') { props.radius = 75; shape = new fabric.Circle(props); } else if (type === 'triangle') { props.width = 150; props.height = 150; shape = new fabric.Triangle(props); } canvas.add(shape); canvas.setActiveObject(shape);
+        }
+
+        function addText() { setDrawingMode('none'); const pos = getPlacementCoords(); const fontFamily = document.getElementById('fontFamilyPicker').value; const fillRgba = getRgbaColor('textColorPicker', 'textTransparencyPicker'); const text = new fabric.IText('더블클릭하여 내용 수정', { left: pos.left, top: pos.top, fontFamily: fontFamily, fontSize: 48, fill: fillRgba, backgroundColor: 'transparent', boxStroke: null, boxStrokeWidth: 0, strokeWidth: 0, stroke: null, cornerColor: '#4f46e5', borderColor: '#4f46e5', transparentCorners: false, isTextObj: true }); canvas.add(text); canvas.setActiveObject(text); }
+
         function addPageNumText() {
             setDrawingMode('none');
             const pos = getPlacementCoords(); const fontFamily = document.getElementById('fontFamilyPicker').value; const textColor = document.getElementById('textColorPicker').value;
             const text = new fabric.IText('- 1 -', {
-                left: pos.left, top: pos.top, fontFamily: fontFamily, fontSize: 48, fill: textColor, backgroundColor: 'transparent', strokeWidth: 0, stroke: null, cornerColor: '#4f46e5', borderColor: '#4f46e5', transparentCorners: false,
+                left: pos.left, top: pos.top, fontFamily: fontFamily, fontSize: 48, fill: textColor, backgroundColor: 'transparent', boxStroke: null, boxStrokeWidth: 0, strokeWidth: 0, stroke: null, cornerColor: '#4f46e5', borderColor: '#4f46e5', transparentCorners: false,
                 isTextObj: true, isPageNumObj: true, editable: false
             });
             canvas.add(text); canvas.setActiveObject(text);
             window.isCreatingNewPageNum = true;
             openSyncModal();
         }
+
+        
+
         function addRotation() { setDrawingMode('none'); currentRotation = (currentRotation + 90) % 360; const bg = canvas.backgroundImage; if (bg) { const w = canvas.width; const h = canvas.height; canvas.setWidth(h); canvas.setHeight(w); canvas.calcOffset(); bg.set({ angle: currentRotation, left: h / 2, top: w / 2 }); canvas.renderAll(); saveCanvasState(); } }
 
         function deleteSelectedObject() {
@@ -3068,30 +3416,44 @@
             const obj = ctxTargetObject || canvas.getActiveObject();
             if (obj) {
                 if (prop === 'textFill' && obj.type !== 'i-text') return;
-                if (prop === 'fill' && obj.type === 'i-text') return;
-                if (obj.type === 'i-text' && prop === 'stroke') return;
                 if (obj.isWhiteout && prop === 'stroke') return;
 
-                if (prop === 'stroke') {
-                    if (value === 'transparent' || value === 'rgba(0,0,0,0)' || !value) {
-                        // [개발자님 아이디어 적용]
-                        const fillColor = obj.fill && obj.fill !== 'transparent' ? obj.fill : null;
-                        obj.set({ stroke: null, strokeWidth: 0, strokeDashArray: null, isTransparentStroke: true });
-                    } else {
-                        if (obj.strokeWidth === 0 || obj.isTransparentStroke) obj.set('strokeWidth', 4);
-                        obj.set({ stroke: value, isTransparentStroke: false });
+                if (obj.type === 'i-text') {
+                    if (prop === 'fill') {
+                        if (value === 'transparent' || value === 'rgba(0,0,0,0)' || !value) obj.set('backgroundColor', '');
+                        else obj.set('backgroundColor', value);
+                    } else if (prop === 'stroke') {
+                        if (value === 'transparent' || value === 'rgba(0,0,0,0)' || !value) {
+                            obj.set({ boxStroke: null, boxStrokeWidth: 0 });
+                        } else {
+                            if (!obj.boxStrokeWidth) obj.set('boxStrokeWidth', 4);
+                            obj.set('boxStroke', value);
+                        }
+                    } else if (prop === 'textFill') {
+                        if (value === 'transparent' || value === 'rgba(0,0,0,0)' || !value) obj.set('fill', '');
+                        else obj.set('fill', value);
                     }
-                } else if (prop === 'fill' || prop === 'textFill') {
-                    let actualProp = prop === 'textFill' ? 'fill' : prop;
-                    if (value === 'transparent' || value === 'rgba(0,0,0,0)') {
-                        obj.set(actualProp, null);
-                        if (obj.isTransparentStroke) obj.set('stroke', null);
-                    } else {
-                        obj.set(actualProp, value);
-                        if (obj.isTransparentStroke) obj.set('stroke', value);
-                    }
+                    obj.set('dirty', true);
                 } else {
-                    obj.set(prop, value);
+                    if (prop === 'stroke') {
+                        if (value === 'transparent' || value === 'rgba(0,0,0,0)' || !value) {
+                            obj.set({ stroke: null, strokeWidth: 0, strokeDashArray: null, isTransparentStroke: true });
+                        } else {
+                            if (obj.strokeWidth === 0 || obj.isTransparentStroke) obj.set('strokeWidth', 4);
+                            obj.set({ stroke: value, isTransparentStroke: false });
+                        }
+                    } else if (prop === 'fill' || prop === 'textFill') {
+                        let actualProp = prop === 'textFill' ? 'fill' : prop;
+                        if (value === 'transparent' || value === 'rgba(0,0,0,0)') {
+                            obj.set(actualProp, null);
+                            if (obj.isTransparentStroke) obj.set('stroke', null);
+                        } else {
+                            obj.set(actualProp, value);
+                            if (obj.isTransparentStroke) obj.set('stroke', value);
+                        }
+                    } else {
+                        obj.set(prop, value);
+                    }
                 }
                 canvas.renderAll();
             }
@@ -3105,22 +3467,14 @@
         function ctxPaste() { if (_clipboard) { _clipboard.clone(function (clonedObj) { canvas.discardActiveObject(); clonedObj.set({ left: ctxMenuCanvasPos.left, top: ctxMenuCanvasPos.top, evented: true, syncId: null, isSyncObj: false }); if (clonedObj.type === 'activeSelection') { clonedObj.canvas = canvas; clonedObj.forEachObject(function (obj) { obj.set({ syncId: null, isSyncObj: false }); canvas.add(obj); }); clonedObj.setCoords(); } else { canvas.add(clonedObj); } canvas.setActiveObject(clonedObj); canvas.renderAll(); saveCanvasState(); }, window.EXTRA_PROPS); } document.getElementById('canvasContextMenu').classList.add('hidden'); }
 
         function ctxAddShape(type) {
-            let fColor = document.getElementById('fillColorPicker').value;
-            let sColor = document.getElementById('strokeColorPicker').value;
-            let sWidth = parseInt(document.getElementById('strokeWidthPicker').value) || 4;
-            const props = {
-                fill: fColor, stroke: sColor, strokeWidth: sWidth,
-                strokeUniform: true, // [핵심]
-                left: ctxMenuCanvasPos.left, top: ctxMenuCanvasPos.top, cornerColor: '#4f46e5', borderColor: '#4f46e5', transparentCorners: false
-            };
-            let shape;
-            if (type === 'rect') { props.width = 200; props.height = 150; shape = new fabric.Rect(props); }
-            else if (type === 'circle') { props.radius = 75; shape = new fabric.Circle(props); }
-            else if (type === 'triangle') { props.width = 150; props.height = 150; shape = new fabric.Triangle(props); }
+            let fColor = document.getElementById('fillColorPicker').value; let sColor = document.getElementById('strokeColorPicker').value;
+            let sw = parseInt(document.getElementById('strokeWidthPicker').value); let sWidth = isNaN(sw) ? 4 : sw;
+            const props = { fill: fColor, stroke: sColor, strokeWidth: sWidth, strokeUniform: true, left: ctxMenuCanvasPos.left, top: ctxMenuCanvasPos.top, cornerColor: '#4f46e5', borderColor: '#4f46e5', transparentCorners: false };
+            let shape; if (type === 'rect') { props.width = 200; props.height = 150; shape = new fabric.Rect(props); } else if (type === 'circle') { props.radius = 75; shape = new fabric.Circle(props); } else if (type === 'triangle') { props.width = 150; props.height = 150; shape = new fabric.Triangle(props); }
             canvas.add(shape); canvas.setActiveObject(shape); saveCanvasState(); document.getElementById('canvasContextMenu').classList.add('hidden');
         }
 
-        function ctxAddText() { const fontFamily = document.getElementById('fontFamilyPicker').value; const textColor = document.getElementById('textColorPicker').value; const text = new fabric.IText('더블클릭하여 내용 수정', { left: ctxMenuCanvasPos.left, top: ctxMenuCanvasPos.top, fontFamily: fontFamily, fontSize: 48, fill: textColor, backgroundColor: 'transparent', strokeWidth: 0, stroke: null, cornerColor: '#4f46e5', borderColor: '#4f46e5', transparentCorners: false, isTextObj: true }); canvas.add(text); canvas.setActiveObject(text); saveCanvasState(); document.getElementById('canvasContextMenu').classList.add('hidden'); }
+        function ctxAddText() { const fontFamily = document.getElementById('fontFamilyPicker').value; const textColor = document.getElementById('textColorPicker').value; const text = new fabric.IText('더블클릭하여 내용 수정', { left: ctxMenuCanvasPos.left, top: ctxMenuCanvasPos.top, fontFamily: fontFamily, fontSize: 48, fill: textColor, backgroundColor: 'transparent', boxStroke: null, boxStrokeWidth: 0, strokeWidth: 0, stroke: null, cornerColor: '#4f46e5', borderColor: '#4f46e5', transparentCorners: false, isTextObj: true }); canvas.add(text); canvas.setActiveObject(text); saveCanvasState(); document.getElementById('canvasContextMenu').classList.add('hidden'); }
 
         // ==============================================================
         // 7. 프레젠테이션 (슬라이드쇼) 및 여백 자르기
