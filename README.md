@@ -5,3 +5,11 @@
 
 * 개발: 부산광역시교육청 AI·데이터연구팀
 * 라이선스: GNU AGPL 3.0 (PyMuPDF 사용)
+
+## 다운로드
+
+[**PenPDF.exe 최신 버전 다운로드**](https://github.com/dikafryo/PenPDF/releases/latest/download/PenPDF.exe)
+
+* 설치 없이 바로 실행되는 Windows용 단일 실행 파일입니다.
+* 이전 버전은 [Releases](https://github.com/dikafryo/PenPDF/releases) 페이지에서 받을 수 있습니다.
+* 처음 실행 시 Windows SmartScreen 경고가 표시되면 "추가 정보" → "실행"을 누르세요.
