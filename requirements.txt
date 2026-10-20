@@ -1,0 +1,5 @@
+pywebview
+PyMuPDF
+python-pptx
+pillow
+pyinstaller
